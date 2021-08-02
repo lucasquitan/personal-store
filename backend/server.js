@@ -3,8 +3,18 @@ import express from 'express';
 import data from './data.js';
 const app = express();
 
+app.get('/api/products/:id', (request, response) => {
+  const product = data.products.find(x => x._id === request.params.id);
+
+  if (!product) {
+    response.status(404).send( { message: 'Product not found'});
+  }
+
+  return response.send(product);
+});
+
 app.get('/', (request, response) => {
-  response.send('Server is ready');
+  return response.send('Server is ready');
 });
 
 app.get('/api/products', (request, response) => {
